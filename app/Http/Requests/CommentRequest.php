@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ForumRequest extends FormRequest
+class CommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class ForumRequest extends FormRequest
     public function rules()
     {
         return [
-            "title" => "required",
-            "description" => "required",
-            "mh_forum_tag_id" => "required|exists:App\Models\MhForumTag,id"
+            "comment" => "required"
         ];
     }
 }

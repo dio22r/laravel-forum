@@ -14,6 +14,6 @@ class ThForumComment extends Model
 
     public function User()
     {
-        return $this->belongsTo(User::class, "id", "created_at");
+        return $this->belongsTo(User::class, "created_by", "id");
     }
 }

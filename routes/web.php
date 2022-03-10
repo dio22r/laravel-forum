@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterGerejaController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumController;;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Resource\FormController;
-
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -54,7 +55,7 @@ Route::get('/forum/{slug}', [ForumController::class, 'show'])->name('forum.detai
 Route::get('/popular', [ForumController::class, 'show'])->name('forum.popular');
 
 Route::get('/tag', [TagController::class, 'index'])->name('tag');
-Route::get('/tag/{slug}', [TagController::class, 'index'])->name('tag.detail');
+Route::get('/tag/{slug}', [TagController::class, 'show'])->name('tag.detail');
 
 
 Route::group([
@@ -72,21 +73,20 @@ Route::group([
     });
 
     Route::group(["prefix" => "/comment"], function () {
-        Route::get('/{forum}/create', [ForumController::class, 'create'])->name('comment.add');
-        Route::get('/{comment}', [ForumController::class, 'edit'])->name('comment.edit');
+        Route::get('/{comment}', [CommentController::class, 'edit'])->name('comment.edit');
 
-        Route::post('/create', [ForumController::class, 'store'])->name('comment.store');
-        Route::put('/{comment}', [ForumController::class, 'update'])->name('comment.update');
-        Route::delete('/{comment}', [ForumController::class, 'destroy'])->name('forum.delete');
+        Route::post('/{forum}/create', [CommentController::class, 'store'])->name('comment.store');
+        Route::put('/{comment}', [CommentController::class, 'update'])->name('comment.update');
+        Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('forum.delete');
     });
 
     Route::group(["prefix" => "/tag"], function () {
-        Route::get('/create', [ForumController::class, 'create'])->name('tag.add');
-        Route::get('/{tag}', [ForumController::class, 'edit'])->name('tag.edit');
+        Route::get('/create', [TagController::class, 'create'])->name('tag.add');
+        Route::get('/{tag}', [TagController::class, 'edit'])->name('tag.edit');
 
-        Route::post('/create', [ForumController::class, 'store'])->name('tag.store');
-        Route::put('/{tag}', [ForumController::class, 'update'])->name('tag.update');
-        Route::delete('/{tag}', [ForumController::class, 'destroy'])->name('tag.delete');
+        Route::post('/create', [TagController::class, 'store'])->name('tag.store');
+        Route::put('/{tag}', [TagController::class, 'update'])->name('tag.update');
+        Route::delete('/{tag}', [TagController::class, 'destroy'])->name('tag.delete');
     });
 
     Route::get('/my-account', [ProfileController::class, 'show'])->name('account');

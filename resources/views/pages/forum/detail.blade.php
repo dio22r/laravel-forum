@@ -6,23 +6,11 @@
         <div class="col-md-8">
             <div class="card border mb-3 rounded-3">
                 <div class="card-body">
-                    <form method="GET">
-                        <div class="input-group rounded-pill">
-                            <input type="text" class="form-control" name="search" placeholder="Cari Forum" aria-describedby="button-addon2" value="{{ request('search') }}">
-                            <button class="btn btn-outline-primary" type="submit" id="button-addon2">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="card border mb-3 rounded-3">
-                <div class="card-body">
                     <h5 class="card-title">{{ $forum->title }}</h5>
-                    <p class="card-text">{{ $forum->description }}</p>
+                    <div class="card-text">{!! $forum->description !!}</div>
                     <div class="row">
                         <div class="col-6">
-                            <div class="author">oleh <span>Admin</span> pada {{ $forum->created_at }}</div>
+                            <div class="author">oleh <span>{{ optional($forum->User)->name }}</span> pada {{ $forum->created_at }}</div>
                         </div>
                         <div class="col-6 text-end">
                             <a href="#" class="btn btn-sm rounded-pill btn-outline-warning">
@@ -36,56 +24,41 @@
             <hr class="mb-3" />
             @if (Auth::check())
 
-            @foreach($comments as $comment)
-            <div class="card border mb-3 rounded-3">
-                <div class="card-body">
-                    <div class="card-text">{{ $comment->comment }}</div>
+            @each('panel.forum.card_comment', $comments, 'comment')
 
+            <div class="card border mb-3 rounded-3">
+                <div class="card-header">
+                    Tambahkan Tanggapan
                 </div>
-                <div class="card-footer">
-                    <div class="author">oleh <span>Admin</span> pada {{ $comment->created_at }}</div>
+                <div class="card-body">
+                    <form method="post" action="{{ route('comment.store', ['forum' => $forum->id]) }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Tanggapan</label>
+                            <textarea class="form-control" id="comment" name="comment" rows="3">{{ old('comment') }}</textarea>
+                            @error('comment')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+
+                        <div class="mb-1">
+                            <button type="submit" class="btn btn-primary">
+                                Kirim Tanggapan
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            @endforeach
 
             {{ $comments->links() }}
 
             @endif
         </div>
         <div class="col-md-4">
-            <div class="card mb-3">
-                <ul class="list-group  list-group-flush">
-                    <li class="list-group-item">Semua Forum</li>
-                    <li class="list-group-item">Semua Tag</li>
-                </ul>
-            </div>
-
-            <!-- <div class="card mb-3">
-                <div class="card-header">
-                    Tag Popular
-                </div>
-                <ul class="list-group  list-group-flush">
-                    <li class="list-group-item">Gereja</li>
-                    <li class="list-group-item">Gembala</li>
-                    <li class="list-group-item">Musda</li>
-                    <li class="list-group-item">Mubes</li>
-                </ul>
-            </div> -->
-
-            <div class="card mb-3">
-                <div class="card-header">
-                    Featured
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Haleluya</h5>
-                    <p class="card-text">
-                        Selamat Datang di Aplikasi Forum GPdI Sulut.
-                        Biarlah kita dapat saling memberkati lewat aplikasi ini.
-                        Ini merupakan aplikasi resmi dari GPdI Sulut
-                    </p>
-                    <a href="#" class="btn btn-primary">Login</a>
-                </div>
-            </div>
+            @include('panel.sideright')
         </div>
     </div>
 </div>

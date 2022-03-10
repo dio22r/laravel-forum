@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ForumRequest;
+use App\Models\MhForumTag;
 use App\Models\MhForumTopic;
 use App\Models\ThForumComment;
 use Illuminate\Http\Request;
@@ -46,7 +47,14 @@ class ForumController extends Controller
 
     public function create(Request $request)
     {
-        return view("public.pages.forum.create");
+        $forum = new MhForumTopic();
+
+        return view("pages.forum.form", [
+            "forum" => $forum,
+            "tags" => MhForumTag::get(),
+            "method" => "POST",
+            "action_url" => route('forum.store')
+        ]);
     }
 
     public function store(ForumRequest $request)
@@ -56,12 +64,15 @@ class ForumController extends Controller
         $forum->slug = Str::slug($request->title) . "-" . rand(100, 999);
         $forum->title = $request->title;
         $forum->description = $request->description;
+        $forum->mh_forum_tag_id = $request->mh_forum_tag_id;
         $forum->created_by = Auth::id();
 
         $status = $forum->save();
         if (!$status) {
-            //
+            return back()->withInput();
         }
+
+        return redirect()->route("forum.detail", ["slug" => $forum->slug]);
     }
 
     public function edit(Request $request, MhForumTopic $forum)

@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <form method="GET">
                         <div class="input-group rounded-pill">
-                            <input type="text" class="form-control" name="search" placeholder="Cari Forum" aria-describedby="button-addon2" value="{{ request('search') }}">
+                            <input type="text" class="form-control" name="search" placeholder="Cari Tag" aria-describedby="button-addon2" value="{{ request('search') }}">
                             <button class="btn btn-outline-primary" type="submit" id="button-addon2">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -17,8 +17,8 @@
                 </div>
             </div>
 
-            @each('panel.forum.card_topic', $listForum, 'forum')
-            {{ $listForum->withQueryString()->links() }}
+            @each('panel.forum.card_tag', $listTag, 'tag')
+            {{ $listTag->withQueryString()->links() }}
 
         </div>
         <div class="col-md-4">
