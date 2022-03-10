@@ -1,15 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterGerejaController;
-use App\Http\Controllers\MasterGembalaController;
-use App\Http\Controllers\MasterGerejaController;
-use App\Http\Controllers\MasterUserGerejaController;
-use App\Http\Controllers\MasterWilayahController;
-use App\Http\Controllers\MenuManagementController;
+use App\Http\Controllers\ForumController;;
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Resource\FormController;
-use App\Http\Controllers\RoleManagementController;
-use App\Http\Controllers\UserManagementController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -50,15 +45,49 @@ Auth::routes([
     'register' => false, // Registration Routes...
 ]);
 
-Route::get('/register/gembala/5526f5323af331ab22dac08d817cfb7520a80fc1', [RegisterGerejaController::class, "showRegistrationForm"])->name("register.gembala");
-Route::post('/register/gembala/5526f5323af331ab22dac08d817cfb7520a80fc1', [RegisterGerejaController::class, "register"])->name("register.gembala");
+Route::get('/register/gembala/5526f5323af331ab22dac08d817cfb7520a80fc1', [RegisterGerejaController::class, "showRegistrationForm"])->name("register.gembala.create");
+Route::post('/register/gembala/5526f5323af331ab22dac08d817cfb7520a80fc1', [RegisterGerejaController::class, "register"])->name("register.gembala.store");
+
+
+Route::get('/', [ForumController::class, 'index'])->name('home');
+Route::get('/forum/{slug}', [ForumController::class, 'show'])->name('forum.detail');
+Route::get('/popular', [ForumController::class, 'show'])->name('forum.popular');
+
+Route::get('/tag', [TagController::class, 'index'])->name('tag');
+Route::get('/tag/{slug}', [TagController::class, 'index'])->name('tag.detail');
+
 
 Route::group([
     "middleware" => ["auth"],
-    "prefix" => "admin"
+    "prefix" => "user"
 ], function () {
 
-    Route::get('/', [ProfileController::class, 'show'])->name('home');
+    Route::group(["prefix" => "/forum"], function () {
+        Route::get('/create', [ForumController::class, 'create'])->name('forum.add');
+        Route::get('/{forum}/edit', [ForumController::class, 'edit'])->name('forum.edit');
+
+        Route::post('/create', [ForumController::class, 'store'])->name('forum.store');
+        Route::put('/{forum}/edit', [ForumController::class, 'update'])->name('forum.update');
+        Route::delete('/{forum}/delete', [ForumController::class, 'destroy'])->name('forum.delete');
+    });
+
+    Route::group(["prefix" => "/comment"], function () {
+        Route::get('/{forum}/create', [ForumController::class, 'create'])->name('comment.add');
+        Route::get('/{comment}', [ForumController::class, 'edit'])->name('comment.edit');
+
+        Route::post('/create', [ForumController::class, 'store'])->name('comment.store');
+        Route::put('/{comment}', [ForumController::class, 'update'])->name('comment.update');
+        Route::delete('/{comment}', [ForumController::class, 'destroy'])->name('forum.delete');
+    });
+
+    Route::group(["prefix" => "/tag"], function () {
+        Route::get('/create', [ForumController::class, 'create'])->name('tag.add');
+        Route::get('/{tag}', [ForumController::class, 'edit'])->name('tag.edit');
+
+        Route::post('/create', [ForumController::class, 'store'])->name('tag.store');
+        Route::put('/{tag}', [ForumController::class, 'update'])->name('tag.update');
+        Route::delete('/{tag}', [ForumController::class, 'destroy'])->name('tag.delete');
+    });
 
     Route::get('/my-account', [ProfileController::class, 'show'])->name('account');
     Route::get('/edit-account', [ProfileController::class, 'edit'])->name('account.edit');
