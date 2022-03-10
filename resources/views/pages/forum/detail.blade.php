@@ -32,6 +32,25 @@
                     </div>
                 </div>
             </div>
+
+            <hr class="mb-3" />
+            @if (Auth::check())
+
+            @foreach($comments as $comment)
+            <div class="card border mb-3 rounded-3">
+                <div class="card-body">
+                    <div class="card-text">{{ $comment->comment }}</div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="author">oleh <span>Admin</span> pada {{ $comment->created_at }}</div>
+                </div>
+            </div>
+            @endforeach
+
+            {{ $comments->links() }}
+
+            @endif
         </div>
         <div class="col-md-4">
             <div class="card mb-3">

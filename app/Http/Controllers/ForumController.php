@@ -35,6 +35,7 @@ class ForumController extends Controller
 
         $comments = ThForumComment::with("User")
             ->where("mh_forum_topic_id", "=", $forum->id)
+            ->orderBy("created_at", "desc")
             ->paginate(20);
 
         return view("pages.forum.detail", [

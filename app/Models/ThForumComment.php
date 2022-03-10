@@ -11,4 +11,9 @@ class ThForumComment extends Model
     use SoftDeletes;
 
     protected $table = 'th_forum_comment';
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, "id", "created_at");
+    }
 }
