@@ -7,6 +7,7 @@ use App\Models\MhForumTopic;
 use App\Models\ThForumComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -25,5 +26,20 @@ class CommentController extends Controller
         }
 
         return redirect()->route("forum.detail", ["slug" => $forum->slug]);
+    }
+
+
+    public function destroy(Request $request, ThForumComment $comment)
+    {
+        $this->authorize('delete', $comment);
+
+        $forum = $comment->MhForumTopic;
+        DB::transaction(function () use ($comment) {
+            $comment->deleted_by = Auth::id();
+            $comment->save();
+            $comment->delete();
+        });
+
+        return redirect()->route("forum.detail", ['slug' => $forum->slug]);
     }
 }

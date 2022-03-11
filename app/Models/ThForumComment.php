@@ -16,4 +16,9 @@ class ThForumComment extends Model
     {
         return $this->belongsTo(User::class, "created_by", "id");
     }
+
+    public function MhForumTopic()
+    {
+        return $this->belongsTo(MhForumTopic::class);
+    }
 }
