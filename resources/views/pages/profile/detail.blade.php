@@ -10,6 +10,19 @@
         Detail Account
     </div>
     <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                @if (!auth()->user()->hasVerifiedEmail())
+                <div class="alert alert-warning" role="alert">
+                    <strong>Maaf, Akun anda belum melakukan verifikasi email.</strong>
+                    Silahkan periksa email anda terlebih dahulu dan klik tombol verifikasi pada email tersebut
+                    agar bisa berinteraksi dalam forum GPdI Sulut.
+                    Jika belum mendapatkan email silahkan tekan tombol "Send Verified Email" dibawah untuk mengirim ulang
+                    link verifikasi.
+                </div>
+                @endif
+            </div>
+        </div>
         <dl class="row">
             <dt class="col-sm-2">Nama</dt>
             <dd class="col-sm-10">
