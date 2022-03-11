@@ -54,7 +54,8 @@ class CommentPolicy
      */
     public function update(User $user, ThForumComment $thForumComment)
     {
-        return $user->id === $thForumComment->created_by && Auth::user()->hasVerifiedEmail();
+        $userRoles = $user->Role->whereIn("id", [1]);
+        return $user->id === $thForumComment->created_by || $userRoles->count() > 0;
     }
 
     /**
@@ -66,7 +67,8 @@ class CommentPolicy
      */
     public function delete(User $user, ThForumComment $thForumComment)
     {
-        return $user->id === $thForumComment->created_by && Auth::user()->hasVerifiedEmail();
+        $userRoles = $user->Role->whereIn("id", [1]);
+        return $user->id === $thForumComment->created_by || $userRoles->count() > 0;
     }
 
     /**

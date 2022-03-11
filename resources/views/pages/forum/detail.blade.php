@@ -37,7 +37,7 @@
 
 @each('panel.forum.card_comment', $comments, 'comment')
 
-@if (auth()->user()->hasVerifiedEmail())
+@can('create', App\Models\ThForumComment::class)
 <div class="card border mb-3 rounded-3">
     <div class="card-header">
         Tambahkan Tanggapan
@@ -64,7 +64,7 @@
         </form>
     </div>
 </div>
-@endif
+@endcan
 
 {{ $comments->links() }}
 

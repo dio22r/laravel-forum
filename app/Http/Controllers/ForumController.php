@@ -15,6 +15,9 @@ class ForumController extends Controller
 {
     public function index()
     {
+        // $userRoles = Auth::user()->Role->whereIn("id", [1]);
+        // dd($userRoles->count());
+
         $listForum = MhForumTopic::with("MhForumTag", "User")
             ->withCount("ThForumComment")
             ->orderBy("created_at", "desc")
