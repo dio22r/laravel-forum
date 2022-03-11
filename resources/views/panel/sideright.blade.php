@@ -30,10 +30,10 @@
         <p class="card-text">
             Selamat Datang di Aplikasi Forum GPdI Sulut.
             Biarlah kita dapat saling memberkati lewat aplikasi ini.
-            Ini merupakan aplikasi resmi dari GPdI Sulut
+            Ini merupakan Aplikasi Forum Diskusi resmi dari Majelis Daerah GPdI Sulut
         </p>
         @guest
-        <a href="#" class="btn btn-primary">Login</a>
+        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
         @endguest
     </div>
 </div>

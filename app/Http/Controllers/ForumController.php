@@ -8,13 +8,14 @@ use App\Models\MhForumTopic;
 use App\Models\ThForumComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ForumController extends Controller
 {
     public function index()
     {
-        $listForum = MhForumTopic::with("MhForumTag")
+        $listForum = MhForumTopic::with("MhForumTag", "User")
             ->withCount("ThForumComment")
             ->orderBy("created_at", "desc")
             ->filters(request(["search"]))
@@ -77,13 +78,19 @@ class ForumController extends Controller
 
     public function edit(Request $request, MhForumTopic $forum)
     {
-        return view("public.pages.forum.edit", [
-            'forum' => $forum
+        $this->authorize('update', $forum);
+
+        return view("pages.forum.form", [
+            'forum' => $forum,
+            "tags" => MhForumTag::get(),
+            "method" => "PUT",
+            "action_url" => route('forum.update', ['forum' => $forum->id])
         ]);
     }
 
     public function update(ForumRequest $request, MhForumTopic $forum)
     {
+        $this->authorize('update', $forum);
 
         $forum->title = $request->title;
         $forum->description = $request->description;
@@ -91,12 +98,22 @@ class ForumController extends Controller
 
         $status = $forum->save();
         if (!$status) {
-            //
+            return back()->withInput();
         }
+
+        return redirect()->route("forum.detail", ["slug" => $forum->slug]);
     }
 
-    public function destroy(ForumRequest $request, MhForumTopic $forum)
+    public function destroy(Request $request, MhForumTopic $forum)
     {
-        //
+        $this->authorize('delete', $forum);
+
+        DB::transaction(function () use ($forum) {
+            $forum->deleted_by = Auth::id();
+            $forum->save();
+            $forum->delete();
+        });
+
+        return redirect()->route("home");
     }
 }

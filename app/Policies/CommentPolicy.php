@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\ThForumComment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class CommentPolicy
 {
@@ -41,7 +42,7 @@ class CommentPolicy
      */
     public function create(User $user)
     {
-        //
+        return  Auth::user()->hasVerifiedEmail();
     }
 
     /**
@@ -53,7 +54,7 @@ class CommentPolicy
      */
     public function update(User $user, ThForumComment $thForumComment)
     {
-        return $user->id === $thForumComment->created_by;
+        return $user->id === $thForumComment->created_by && Auth::user()->hasVerifiedEmail();
     }
 
     /**
@@ -65,7 +66,7 @@ class CommentPolicy
      */
     public function delete(User $user, ThForumComment $thForumComment)
     {
-        return $user->id === $thForumComment->created_by;
+        return $user->id === $thForumComment->created_by && Auth::user()->hasVerifiedEmail();
     }
 
     /**

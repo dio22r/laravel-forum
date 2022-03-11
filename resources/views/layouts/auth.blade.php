@@ -19,7 +19,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/public.css') }}" rel="stylesheet">
     <link href="{{ url('/assets/vendor/fa/css/all.min.css') }}" rel="stylesheet">
 </head>
 
@@ -89,16 +88,7 @@
         </nav>
 
         <main class="py-4">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 mb-3">
-                        @yield('content')
-                    </div>
-                    <div class="col-md-4  mb-3">
-                        @include('panel.sideright')
-                    </div>
-                </div>
-            </div>
+            @yield('content')
         </main>
     </div>
 

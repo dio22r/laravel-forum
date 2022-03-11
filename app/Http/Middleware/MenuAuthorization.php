@@ -23,28 +23,6 @@ class MenuAuthorization
             return redirect()->route('account');
         }
 
-        $menuCode = $request->segment(2);
-
-        $roles = Auth::user()->Role;
-        if (!$roles) abort(403);
-
-        $role = $roles[0];
-        $menu = Menu::whereHas("Role", function ($query) use ($role) {
-            return $query->where("roles.id", "=", $role->id);
-        })->where("menus.code", "=", $menuCode)
-            ->first();
-
-        if (!$menu) abort(403);
-
-        $menuActions = $role->MenuAction()
-            ->where("menu_id", "=", $menu->id)->get();
-
-        foreach ($menuActions as $menuAction) {
-            Gate::define($menuAction->code, function ($user) {
-                return true;
-            });
-        }
-
         return $next($request);
     }
 }

@@ -9,7 +9,7 @@
         <p class="card-text">{{ Str::words(strip_tags($tag->description), 40) }}</p>
         <div class="row">
             <div class="col-6">
-                <div class="counter">ada {{ $tag->mh_forum_topic_count }} Forum</div>
+                <div class="counter">{{ $tag->mh_forum_topic_count }} Forum</div>
             </div>
         </div>
 
