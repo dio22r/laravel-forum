@@ -1,4 +1,4 @@
-<div class="card border border-primary mb-3 rounded-3">
+<div class="card shadow border mb-3 rounded-3">
     <div class="card-body">
         <div class="card-text">{{ $comment->comment }}</div>
 

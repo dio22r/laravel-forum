@@ -1,4 +1,4 @@
-<div class="card border border-primary mb-3 rounded-3">
+<div class="card border shadow mb-3 rounded-3">
     <div class="card-body">
         <h5 class="card-title">
             <a href="{{ route('tag.detail', ['slug' => $tag->slug]) }}">

@@ -1,12 +1,12 @@
-<div class="card border border-primary mb-3 rounded-3">
+<div class="card shadow border mb-3 rounded-3">
     <div class="card-body">
-        <h5 class="card-title">
+        <h4 class="card-title">
             <a href="{{ route('forum.detail', ['slug' => $forum->slug]) }}">
                 {{ Str::words($forum->title, 20) }}
             </a>
-        </h5>
+        </h4>
         <div class="author">oleh <span>{{ optional($forum->User)->name }}</span> pada {{ $forum->created_at }}</div>
-        <p class="card-text">{{ Str::words(strip_tags($forum->description), 40) }}</p>
+        <p class="card-text  fw-lighter">{{ Str::words(strip_tags($forum->description), 40) }}</p>
         <div class="row mb-2">
             <div class="col-sm-6">
                 <a href="{{ route('tag.detail', ['slug' => $forum->MhForumTag->slug]) }}" class="btn btn-sm rounded-pill btn-outline-warning">
