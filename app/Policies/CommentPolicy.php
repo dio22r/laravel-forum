@@ -54,7 +54,7 @@ class CommentPolicy
      */
     public function update(User $user, ThForumComment $thForumComment)
     {
-        $userRoles = $user->Role->whereIn("id", [1]);
+        $userRoles = $user->Role->whereIn("id", [1, 2]);
         return $user->id === $thForumComment->created_by || $userRoles->count() > 0;
     }
 
@@ -67,7 +67,7 @@ class CommentPolicy
      */
     public function delete(User $user, ThForumComment $thForumComment)
     {
-        $userRoles = $user->Role->whereIn("id", [1]);
+        $userRoles = $user->Role->whereIn("id", [1, 2]);
         return $user->id === $thForumComment->created_by || $userRoles->count() > 0;
     }
 

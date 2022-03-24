@@ -54,7 +54,7 @@ class ForumPolicy
      */
     public function update(User $user, MhForumTopic $mhForumTopic)
     {
-        $userRoles = $user->Role->whereIn("id", [1]);
+        $userRoles = $user->Role->whereIn("id", [1, 2]);
         return $user->id === $mhForumTopic->created_by || $userRoles->count() > 0;
     }
 
@@ -67,7 +67,7 @@ class ForumPolicy
      */
     public function delete(User $user, MhForumTopic $mhForumTopic)
     {
-        $userRoles = $user->Role->whereIn("id", [1]);
+        $userRoles = $user->Role->whereIn("id", [1, 2]);
         return $user->id === $mhForumTopic->created_by || $userRoles->count() > 0;
     }
 
