@@ -15,7 +15,7 @@
             </div>
             <div class="col-sm-6 text-end">
                 @can('update', $forum)
-                <a href="{{ route('forum.edit', ['forum' => $forum->id]) }}" class="btn btn-sm btn-warning">
+                <a href="{{ route('forum.edit', ['forum' => $forum->id]) }}" class="btn btn-sm btn-outline-warning">
                     <i class="fas fa-edit"></i>
                 </a>
                 @endcan
@@ -23,7 +23,7 @@
                 <form class="d-inline" method="post" action="{{ route('forum.delete', ['forum' => $forum->id]) }}">
                     @method('DELETE')
                     @csrf
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin akan  menghapus data ini?')">
+                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Apakah anda yakin akan  menghapus data ini?')">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </form>
