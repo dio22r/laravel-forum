@@ -3,7 +3,7 @@
 @section('content')
 <div class="card mb-3">
     <div class="card-header">
-        Form Forum Topic
+        Form Tag
     </div>
     <div class="card-body">
         <form method="post" action="{{ $action_url }}">
@@ -11,7 +11,7 @@
             @method($method)
             <div class="mb-3">
                 <label for="title" class="form-label">Judul</label>
-                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Judul Forum">
+                <input value="{{ $tag->title }}" type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Judul Forum">
                 @error('title')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -20,21 +20,8 @@
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Deskripsi</label>
-                <textarea class="form-control tinymce" id="description" name="description" rows="3"></textarea>
+                <textarea class="form-control tinymce" id="description" name="description" rows="3">{{ $tag->description }}</textarea>
                 @error('description')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="mh_forum_tag_id" class="form-label">Tags</label>
-                <select class="form-select  @error('mh_forum_tag_id') is-invalid @enderror" id="mh_forum_tag_id" name="mh_forum_tag_id">
-                    @foreach($tags as $tag)
-                    <option value="{{ $tag->id }}">{{ $tag->title }}</option>
-                    @endforeach
-                </select>
-                @error('mh_forum_tag_id')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>

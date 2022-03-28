@@ -14,6 +14,16 @@
     </div>
 </div>
 
+<div class="d-flex mb-3 justify-content-between align-items-center">
+    <div class="display-5">List Tag</div>
+
+
+    @can('create', new App\Models\MhForumTag())
+    <a href="{{ route('tag.add') }}" class="btn px-3 rounded-pill btn-outline-primary">
+        <i class="fas fa-tag"></i> Buat Tag
+    </a>
+    @endcan
+</div>
 @each('panel.forum.card_tag', $listTag, 'tag')
 {{ $listTag->withQueryString()->links() }}
 

@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\MhForumTag;
 use App\Models\MhForumTopic;
 use App\Models\ThForumComment;
 use App\Policies\CommentPolicy;
 use App\Policies\ForumPolicy;
+use App\Policies\TagPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,7 +21,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
         MhForumTopic::class => ForumPolicy::class,
-        ThForumComment::class => CommentPolicy::class
+        ThForumComment::class => CommentPolicy::class,
+        MhForumTag::class => TagPolicy::class
     ];
 
     /**
