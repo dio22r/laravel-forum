@@ -21,11 +21,13 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/public.css') }}" rel="stylesheet">
     <link href="{{ url('/assets/vendor/fa/css/all.min.css') }}" rel="stylesheet">
+
+    @yield('css')
 </head>
 
 <body class="bg-light">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -70,6 +72,12 @@
                                 <a class="dropdown-item text-bold text-primary" href="{{ route('forum.add') }}">
                                     <i class="fas fa-comment-alt"></i> Buat Forum
                                 </a>
+
+                                @if(Auth::user()->isAdmin())
+                                <a class="dropdown-item text-bold text-warning" href="{{ route('admin.home') }}">
+                                    <i class="fas fa-user-shield"></i> Admin Area
+                                </a>
+                                @endif
 
                                 <hr />
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
